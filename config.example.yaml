@@ -1,0 +1,43 @@
+title: 每周科研周报
+timezone: Asia/Shanghai
+sources:
+  arxiv:
+    enable: true
+    # arXiv 查询关键词，支持 AND/OR 逻辑（逗号分隔表示 OR，空格表示 AND）
+    keywords:
+      - large language model
+      - retrieval augmented generation
+      - multimodal
+    categories: [cs.CL, cs.LG, cs.AI]
+    # 每次抓取的最大论文数（抓取后会再做去重与评分筛选）
+    max_results: 100
+    # 相对时间窗口（天），例如 7 表示仅关注最近 7 天
+    window_days: 7
+    # 过滤条件：标题或摘要需匹配这些正则之一（可选）
+    include_regex: []
+    # 排除条件：标题或摘要匹配这些正则之一则剔除（可选）
+    exclude_regex: []
+scoring:
+  # 是否启用 LLM 摘要与相关性评分
+  use_llm: false
+  llm_model: gpt-4o-mini
+  max_tokens: 512
+  temperature: 0.2
+  top_k: 15
+  min_relevance: 0.55
+render:
+  max_per_section: 20
+  output_dir: out
+  formats: [md, html]
+deliver:
+  telegram:
+    enable: false
+    bot_token: "${{ secrets.TELEGRAM_BOT_TOKEN }}"
+    chat_id: "${{ secrets.TELEGRAM_CHAT_ID }}"
+  email:
+    enable: false
+    smtp_host: "${{ secrets.SMTP_HOST }}"
+    smtp_port: 587
+    smtp_user: "${{ secrets.SMTP_USER }}"
+    smtp_password: "${{ secrets.SMTP_PASSWORD }}"
+    mail_to: "${{ secrets.MAIL_TO }}"
